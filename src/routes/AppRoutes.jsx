@@ -1,4 +1,11 @@
-import { BrowserRouter, Routes, Route } from "react-router"
+import About from "@/pages/About"
+import Dashboard from "@/pages/admin/Dashboard"
+import Manage from "@/pages/admin/Manage"
+import Home from "@/pages/Home"
+import NotFound from "@/pages/NotFound"
+import Navbar from "@/layouts/Navbar"
+import { BrowserRouter, Routes, Route, Outlet } from "react-router"
+import NavbarAdmin from "@/layouts/NavbarAdmin"
 
 function AppRoutes() {
 
@@ -7,15 +14,19 @@ function AppRoutes() {
             <BrowserRouter>
                 <Routes>
                     {/* Public */}
-                    <Route path="/" element={ <h1> Home Page! </h1> }></Route>
-                    <Route path='/about' element={ <h1> About </h1> }/>
+                    <Route element={ <Navbar/> }>
+                        <Route path='/' element={ <Home/> } />
+                        <Route path='about' element={ <About/> } />
+                    </Route>
 
                     {/* Private */}
-                    <Route path='/admin' element={ <h1>Admin</h1> }/>
-                    <Route path='/dashboard' element={ <h1>Dashboard</h1> }/>
-                    <Route path='/manage' element={ <h1>Manage</h1> }/>
+                    <Route path='admin' element={ <NavbarAdmin/> }>
+                        <Route index element={ <Dashboard/> } />
+                        <Route path='manage' element={ <Manage/> } />
+                    </Route>
 
-                    <Route path='*' element={ <h1>404 Page not found </h1>}/>
+                    {/* Not found */}
+                    <Route path='*' element={ <NotFound/>}/>
                 </Routes>
             </BrowserRouter>
         </>
