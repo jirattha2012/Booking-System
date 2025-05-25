@@ -3,9 +3,9 @@ import Dashboard from "@/pages/admin/Dashboard"
 import Manage from "@/pages/admin/Manage"
 import Home from "@/pages/Home"
 import NotFound from "@/pages/NotFound"
-import Navbar from "@/layouts/Navbar"
+import Layout from "@/layouts/Layout"
 import { BrowserRouter, Routes, Route, Outlet } from "react-router"
-import NavbarAdmin from "@/layouts/NavbarAdmin"
+import LayoutAdmin from "@/layouts/LayoutAdmin"
 
 function AppRoutes() {
 
@@ -14,13 +14,13 @@ function AppRoutes() {
             <BrowserRouter>
                 <Routes>
                     {/* Public */}
-                    <Route element={ <Navbar/> }>
+                    <Route element={ <Layout/> }>
                         <Route path='/' element={ <Home/> } />
                         <Route path='about' element={ <About/> } />
                     </Route>
 
                     {/* Private */}
-                    <Route path='admin' element={ <NavbarAdmin/> }>
+                    <Route path='admin' element={ <LayoutAdmin/> }>
                         <Route index element={ <Dashboard/> } />
                         <Route path='manage' element={ <Manage/> } />
                     </Route>
