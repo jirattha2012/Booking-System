@@ -7,7 +7,7 @@ function Navbar() {
     return(
         <>
             <nav>
-                <div className="w-full flex flex-col justify-between px-14 py-6 items-center sm:flex-row gap-5">
+                <div className="w-full flex flex-col justify-between px-6 py-6 items-center sm:flex-row gap-5">
                     <Logo />
                     <SearchBar />
                     <Menu />

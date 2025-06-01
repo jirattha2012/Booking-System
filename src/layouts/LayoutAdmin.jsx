@@ -3,10 +3,10 @@ import { Outlet } from "react-router"
 
 function LayoutAdmin() {
     return(
-        <>
+        <main className="container">
             <Navbar />
             <Outlet />
-        </>
+        </main>
     )
 }
 
