@@ -9,27 +9,28 @@ import { FaArrowsRotate } from "react-icons/fa6";
 import './camping.css'
 import CategoryInput from "@/form/CategoryInput";
 import MapDisplay from "@/components/map/MapDisplay";
+import { campingSchema } from "@/components/utils/schemas"
 
 
-const campingSchema = z.object({
-    title: z.string().trim().min(2, 'Title must be more than 2 characters'),
-    price: z.coerce.number(),
-    description: z.string().trim().max(200, 'Description must be less than 200 characters'),
-    category: z.string(),
-    latitude: z.coerce.number(),
-    longitude: z.coerce.number()
-})
+// const campingSchema = z.object({
+//     title: z.string().trim().min(2, 'Title must be more than 2 characters'),
+//     price: z.coerce.number(),
+//     description: z.string().trim().max(200, 'Description must be less than 200 characters'),
+//     category: z.string(),
+//     latitude: z.coerce.number(),
+//     longitude: z.coerce.number()
+// })
+
 
 function Camping() {
 
     const { register, handleSubmit, formState, setValue } = useForm({ resolver: zodResolver(campingSchema) });
-
     const { errors, isSubmitting } = formState
     // const errors = formState.errors
     // console.log('has problem! =>', errors)
 
     const onSubmitData = async (data) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+        // await new Promise((resolve) => setTimeout(resolve, 1000))
         console.log(data)
     }
     console.log(isSubmitting)

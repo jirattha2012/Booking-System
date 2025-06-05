@@ -7,6 +7,7 @@ import Layout from "@/layouts/Layout"
 import { BrowserRouter, Routes, Route, Outlet } from "react-router"
 import LayoutAdmin from "@/layouts/LayoutAdmin"
 import Camping from "@/pages/admin/Camping"
+import Profile from "@/pages/Profile"
 
 function AppRoutes() {
 
@@ -14,10 +15,16 @@ function AppRoutes() {
         <>
             <BrowserRouter>
                 <Routes>
-                    {/* User (Public) */}
+                    {/* Public (None login) */}
                     <Route element={ <Layout/> }>
-                        <Route path='/' element={ <Home/> } />
+                        <Route path='/' element={ <Home/> } />dfs
                         <Route path='about' element={ <About/> } />
+                    </Route>
+
+
+                    {/* User (Private/) */}
+                    <Route path='user' element={ <Layout/> }>
+                        <Route path='profile' element={ <Profile/> } />
                     </Route>
 
                     {/* Admin (Private) */}
@@ -28,7 +35,7 @@ function AppRoutes() {
                     </Route>
 
                     {/* Not found */}
-                    <Route path='*' element={ <NotFound/>}/>
+                    <Route path='*' element={ <NotFound/> }/>
                 </Routes>
             </BrowserRouter>
         </>
