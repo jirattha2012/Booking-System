@@ -10,6 +10,8 @@ import './camping.css'
 import CategoryInput from "@/form/CategoryInput";
 import MapDisplay from "@/components/map/MapDisplay";
 import { campingSchema } from "@/components/utils/schemas"
+import { createCamping } from "@/api/campingService"
+import { useAuth } from "@clerk/clerk-react";
 
 
 // const campingSchema = z.object({
@@ -29,11 +31,22 @@ function Camping() {
     // const errors = formState.errors
     // console.log('has problem! =>', errors)
 
+    const { userId, sessionId, getToken, isLoaded, isSignedIn } = useAuth();
+
     const onSubmitData = async (data) => {
         // await new Promise((resolve) => setTimeout(resolve, 1000))
         console.log(data)
+
+        const token = await getToken()
+
+        createCamping(data, token)
+            .then((res) => {
+                console.log('data = ', res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
-    console.log(isSubmitting)
 
 
     return (
@@ -90,7 +103,7 @@ function Camping() {
                     </div>
 
                     {/* Display Map */}
-                    <MapDisplay 
+                    <MapDisplay
                         register={register}
                         location={[13.75, 100.50]}
                         setValue={setValue}

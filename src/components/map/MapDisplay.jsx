@@ -30,7 +30,6 @@ function LocationMarker({ position, setPosition, setValue }) {
         </Marker>
     )
 }
-
 // render(
 //     <MapContainer
 //         center={{ lat: 51.505, lng: -0.09 }}
@@ -66,7 +65,7 @@ function MapDisplay({ register, location, setValue }) {
                     center={ location || DEFAULT_LOCATION }    // จุดกึ่งกลางแผนที่
                     zoom={13}
                     scrollWheelZoom={false}
-                    className='w-12/12 h-[57vh] z-10'
+                    className='w-12/12 h-[57vh] z-10 rounded-xl'
                 >
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
