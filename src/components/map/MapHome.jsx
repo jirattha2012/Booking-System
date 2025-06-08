@@ -14,7 +14,7 @@ function MapHome() {
         getCampingList()
             .then((res) => {
                 setLandmark(res.data.result)
-                console.log(landmark)
+                console.log(res.data.result)
             })
             .catch((error) => console.log(error))
     }

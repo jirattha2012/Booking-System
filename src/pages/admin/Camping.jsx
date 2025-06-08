@@ -12,6 +12,9 @@ import MapDisplay from "@/components/map/MapDisplay";
 import { campingSchema } from "@/components/utils/schemas"
 import { createCamping } from "@/api/campingService"
 import { useAuth } from "@clerk/clerk-react";
+import { resizeFile } from '@/components/utils/resizeFile'
+import { uploadFile } from '@/api/uploadFile'
+import { useState, useEffect } from 'react'
 
 
 // const campingSchema = z.object({
@@ -26,26 +29,59 @@ import { useAuth } from "@clerk/clerk-react";
 
 function Camping() {
 
-    const { register, handleSubmit, formState, setValue } = useForm({ resolver: zodResolver(campingSchema) });
+    const { register, handleSubmit, formState, setValue, reset } = useForm({ 
+        resolver: zodResolver(campingSchema),
+        defaultValues: {
+            file: undefined
+        }
+    });
     const { errors, isSubmitting } = formState
     // const errors = formState.errors
     // console.log('has problem! =>', errors)
-
     const { userId, sessionId, getToken, isLoaded, isSignedIn } = useAuth();
 
-    const onSubmitData = async (data) => {
-        // await new Promise((resolve) => setTimeout(resolve, 1000))
-        console.log(data)
+    const [isLoading, setIsLoading] = useState(false)
 
+
+    const onSubmitData = async (data) => {
         const token = await getToken()
+        // await new Promise((resolve) => setTimeout(resolve, 1000))
+        console.log('Form Data: ', data);
 
         createCamping(data, token)
             .then((res) => {
                 console.log('data = ', res)
+                reset()
             })
             .catch((err) => {
                 console.log(err)
             })
+    }
+
+    const onUploadFile = async (e) => {
+        const token = await getToken()
+        const file = e.target.files[0]
+        // console.log(file)
+
+        if (!file) { 
+            return 
+        } else {
+            setIsLoading(true)
+        }
+
+        try {
+            const resizerFile = await resizeFile(file)
+            const response = await uploadFile(resizerFile, token)
+            const uploaded = await response.data.result;
+            console.log('Uploaded file URL:', uploaded);
+
+            setValue('file', uploaded);     // ⭐ ใส่ URL เข้าไปใน field 'file'
+            setIsLoading(false)
+        }
+        catch (error) {
+            setIsLoading(false)
+            console.log(error)
+        }
     }
 
 
@@ -85,7 +121,7 @@ function Camping() {
                         {/* Description */}
                         <div>
                             <Label> Description </Label>
-                            <Textarea type="text" placeholder="Description" rows={2}
+                            <Textarea type="text" placeholder="Description" rows={5}
                                 {...register('description')}
                                 className={`
                                     rounded-[0.3rem]
@@ -95,11 +131,32 @@ function Camping() {
                             <p className="text-xs text-red-900"> {errors.description?.message ? errors.description.message : null} </p>
                         </div>
 
-                        {/* CategorieInput module */}
-                        <CategoryInput
-                            register={register}
-                            setValue={setValue}
-                        />
+                        <div>
+                            {/* CategorieInput module */}
+                            <CategoryInput
+                                register={register}
+                                setValue={setValue}     // ทำให้ดึงข้อมูลจากหน้า CategorieInput มาแสดงที่หน้านี้ได้
+                            />
+
+                            {/* Upload JPG File */}
+                            <div className="mt-4">
+                                <Label> Upload image </Label>
+                                <div className="flex items-center gap-2">
+                                    <input type="hidden" {...register("file")} />
+                                    <Input
+                                        type='file'
+                                        className='rounded-[0.3rem]'
+                                        onChange={onUploadFile}
+                                    />
+                                    <div>
+                                        { isLoading ?
+                                            <FaArrowsRotate className='animate-spin' />
+                                            : null
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Display Map */}
@@ -114,13 +171,13 @@ function Camping() {
                     <div className="flex justify-center items-center mt-6">
                         <Button
                             type='submit'
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || isLoading}
                             className={`
                                 border border-black py-2 px-6 w-48 min-w-[120px] bg-blue-600 text-white hover:bg-blue-700
-                                ${isSubmitting ? 'border-gray-400 text-gray-400' : null}
+                                ${isSubmitting || isLoading ? 'border-gray-400 text-gray-400' : null}
                             `}
                         >
-                            {isSubmitting ?
+                            {isSubmitting || isLoading ?
                                 <>
                                     <FaArrowsRotate className='animate-spin' />
                                     <span> Please Wait </span>
