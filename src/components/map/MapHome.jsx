@@ -23,7 +23,7 @@ function MapHome() {
         <div>
             <h1> Map Home </h1>
 
-            <MapContainer center={[13.75, 100.50]} zoom={8} scrollWheelZoom={true} className='w-11/12 h-[64vh] z-10 rounded-xl'>
+            <MapContainer center={[13.75, 100.50]} zoom={8} scrollWheelZoom={false} className='w-11/12 h-[64vh] z-10 rounded-xl'>
                 {/* แสดงแนที่ */}
                 <LayersControl>
                     <LayersControl.BaseLayer name="OSM" checked>

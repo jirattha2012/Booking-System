@@ -9,6 +9,7 @@ import LayoutAdmin from "@/layouts/LayoutAdmin"
 import Camping from "@/pages/admin/Camping"
 import Profile from "@/pages/Profile"
 import PermissionRoute from "./PermissionRoute"
+import CampingDetail from "@/pages/user/CampingDetail"
 
 function AppRoutes() {
 
@@ -26,6 +27,7 @@ function AppRoutes() {
                     {/* User (Private/) */}
                     <Route path='user' element={ <Layout/> }>
                         <Route path='profile' element={ <Profile/> } />
+                        <Route path='camping/:landmark_id' element={ <CampingDetail/> } />
                     </Route>
 
                     {/* Admin (Private) */}

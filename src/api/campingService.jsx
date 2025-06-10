@@ -13,3 +13,7 @@ export async function createCamping(data, token) {
 export async function getCampingList() {
     return await axios.get('http://localhost:5000/api/camping')
 }
+
+export async function getCampingById(id) {
+    return await axios.get(`http://localhost:5000/api/camping/${id}`)
+}
