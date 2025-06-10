@@ -63,8 +63,8 @@ function MapDisplay({ register, location, setValue }) {
             <div>
                 <MapContainer
                     center={ location || DEFAULT_LOCATION }    // จุดกึ่งกลางแผนที่
-                    zoom={13}
-                    scrollWheelZoom={false}
+                    zoom={8}
+                    scrollWheelZoom={true}
                     className='w-12/12 h-[57vh] z-10 rounded-xl'
                 >
                     <TileLayer

@@ -7,12 +7,6 @@ export const campingSchema = z.object({
     category: z.string(),
     latitude: z.coerce.number(),
     longitude: z.coerce.number(),
-    // file: z.object({
-    //     asset_id: z.string(),
-    //     public_id: z.string(),
-    //     secure_url: z.string().url(),
-    //     // หรือจะใช้ .optional() ถ้าไม่บังคับอัปโหลด
-    // }).optional().nullable() || z.any()
     file: z.any()
 })
 

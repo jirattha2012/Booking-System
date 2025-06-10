@@ -4,7 +4,7 @@ import { getCampingList } from '@/api/campingService'
 
 
 function MapHome() {
-    const [landmark, setLandmark] = useState([])
+    const [landmarks, setLandmarks] = useState([])
 
     useEffect(() => {
         handleCampingList()
@@ -13,8 +13,8 @@ function MapHome() {
     const handleCampingList = () => {
         getCampingList()
             .then((res) => {
-                setLandmark(res.data.result)
-                console.log(res.data.result)
+                setLandmarks(res.data.result)
+                // console.log(res.data.result)
             })
             .catch((error) => console.log(error))
     }
@@ -28,23 +28,23 @@ function MapHome() {
                 <LayersControl>
                     <LayersControl.BaseLayer name="OSM" checked>
                         <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                     </LayersControl.BaseLayer>
 
-                    <LayersControl.BaseLayer name="Satellite" checked>
+                    <LayersControl.BaseLayer name="Satellite">
                         <TileLayer
-                            attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+                            // attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
                             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                         />
                     </LayersControl.BaseLayer>
 
-                    {/* Overlay layer (เหมือน checkbox) */}
+                    {/* Overlay layer กรองข้อมูล (เหมือน checkbox) */}
                     <LayersControl.Overlay name="Landmark" checked>
                         <LayerGroup>
                             {/* ปักหมุด */}
-                            {landmark.map((item, index) => {
+                            {landmarks.map((item, index) => {
                                 return (
                                     <Marker key={index} position={[item.latitude, item.longitude]}>
                                         <Popup>

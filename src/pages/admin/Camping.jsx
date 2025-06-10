@@ -15,6 +15,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { resizeFile } from '@/components/utils/resizeFile'
 import { uploadFile } from '@/api/uploadFile'
 import { useState, useEffect } from 'react'
+import { displayAlert } from "@/components/utils/DisplayAlert";
 
 
 // const campingSchema = z.object({
@@ -48,13 +49,15 @@ function Camping() {
         // await new Promise((resolve) => setTimeout(resolve, 1000))
         console.log('Form Data: ', data);
 
-        createCamping(data, token)
+        await createCamping(data, token)
             .then((res) => {
                 console.log('data = ', res)
+                displayAlert('Create landmark successfully', 'success')
                 reset()
             })
             .catch((err) => {
                 console.log(err)
+                displayAlert(err.message, 'error')
             })
     }
 
@@ -171,13 +174,13 @@ function Camping() {
                     <div className="flex justify-center items-center mt-6">
                         <Button
                             type='submit'
-                            disabled={isSubmitting || isLoading}
+                            disabled={isSubmitting == true || isLoading}
                             className={`
                                 border border-black py-2 px-6 w-48 min-w-[120px] bg-blue-600 text-white hover:bg-blue-700
-                                ${isSubmitting || isLoading ? 'border-gray-400 text-gray-400' : null}
+                                ${isSubmitting == true || isLoading ? 'border-gray-400 text-gray-400' : null}
                             `}
                         >
-                            {isSubmitting || isLoading ?
+                            {isSubmitting == true ?
                                 <>
                                     <FaArrowsRotate className='animate-spin' />
                                     <span> Please Wait </span>
