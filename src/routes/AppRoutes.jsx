@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router"
 import LayoutAdmin from "@/layouts/LayoutAdmin"
 import Camping from "@/pages/admin/Camping"
 import Profile from "@/pages/Profile"
+import PermissionRoute from "./PermissionRoute"
 
 function AppRoutes() {
 
@@ -28,7 +29,7 @@ function AppRoutes() {
                     </Route>
 
                     {/* Admin (Private) */}
-                    <Route path='admin' element={ <LayoutAdmin/> }>
+                    <Route path='admin' element={ <PermissionRoute layoutAdmin={ <LayoutAdmin/> } /> }>
                         <Route index element={ <Dashboard/> } />
                         <Route path='manage' element={ <Manage/> } />
                         <Route path='camping' element={ <Camping/> } />

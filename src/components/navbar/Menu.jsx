@@ -8,7 +8,7 @@ import {
 } from "../ui/dropdown-menu"
 import { Button } from "../ui/button"
 import { FaBars } from "react-icons/fa";
-import { links } from "../utils/links";
+import { publicLinks, privateLinks } from "../utils/links";
 import { Link } from "react-router"
 import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton, SignUpButton } from '@clerk/clerk-react';
 import SignOut from "./SignOut";
@@ -33,9 +33,8 @@ const Menu = () => {
                 <DropdownMenuContent className='bg-white'>
                     <DropdownMenuLabel> My Account </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-
                     {
-                        links.map((item, index, element) => {
+                        publicLinks.map((item, index, element) => {
                             // console.log('item=>', item, '| index=>', i, '| element=>', element)
 
                             return (
@@ -45,6 +44,20 @@ const Menu = () => {
                             )
                         })
                     }
+
+                    <SignedIn>
+                        {
+                            privateLinks.map((item, index, element) => {
+                                // console.log('item=>', item, '| index=>', i, '| element=>', element)
+
+                                return (
+                                    <DropdownMenuItem key={index}> 
+                                        <Link to={item.href}> {item.label} </Link> 
+                                    </DropdownMenuItem>
+                                )
+                            })
+                        }
+                    </SignedIn>
 
                     <hr/>
 
